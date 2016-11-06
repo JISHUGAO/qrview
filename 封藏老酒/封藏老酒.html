@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)http://xc.xb315.com:8080/xc/joyawebController/managerWarn?pwd=52944335887170881114 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta content="IE=11.0000" http-equiv="X-UA-Compatible">
+ <!--屏幕适配--> 
+<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no"> <!--不识别电话号码--> 
+<meta name="format-detection" content="telephone=no"> 
+ 
+<title>封藏老酒</title> 
+<link rel="stylesheet" href="./封藏老酒_files/base.css">
+<link rel="stylesheet" href="./封藏老酒_files/style.css">
+<link rel="stylesheet" href="./封藏老酒_files/glide.css">
+ 
+<script src="./封藏老酒_files/jquery-1.7.2.min.js"></script>
+<script src="./封藏老酒_files/glide.min.js"></script>
+ 
+<style type="text/css"> 
+.window{ 
+    width:300px; 
+    height:160px; 
+	background-image: url(/xc/images/warning.png);
+	background-repeat: no-repeat;
+    position:absolute; 
+    padding:2px; 
+    margin:5px; 
+    display:none; 
+	color:white;
+    } 
+.content_remind{ 
+    font:14px/150% 'Microsoft YaHei';
+    overflow:auto; 
+	color:black;
+    } 
+    .title_remind{ 
+		width:70px;
+		height:45px;
+        padding:5px; 
+        font-size:12px; 
+        float:right; 
+        } 
+.title_remind img{ 
+        float:right; 
+        } 
+</style> 
+
+
+  <script type="text/javascript">
+  //获取窗口的高度 
+var windowHeight; 
+//获取窗口的宽度 
+var windowWidth; 
+//获取弹窗的宽度 
+var popWidth; 
+//获取弹窗高度 
+var popHeight; 
+function init(){ 
+   windowHeight=$(window).height(); 
+   windowWidth=$(window).width(); 
+   popHeight=$(".window").height(); 
+   popWidth=$(".window").width(); 
+} 
+//关闭窗口的方法 
+function closeWindow(){ 
+    $(".title_remind").click(function(){ 
+        $(this).parent().hide("slow"); 
+        }); 
+    } 
+    //定义弹出居中窗口的方法 
+    function popCenterWindow(){ 
+        init(); 
+        //计算弹出窗口的左上角Y的偏移量 
+    var popY=(windowHeight-popHeight)/2; 
+    var popX=(windowWidth-popWidth)/2; 
+    //设定窗口的位置 
+    $("#center").css("top",popY).css("left",popX).slideToggle("slow");  
+    closeWindow(); 
+    } 
+    
+function OnOK(){
+	//window.open(document.getElementById("icon4").href);
+	window.location=document.getElementById("icon4").href;
+}
+     </script> 
+
+<script>
+var pwd="";
+pwd=getParameter("pwd");
+if(pwd!="")
+{
+	if(window.location.href.indexOf("joyawebController")<0)
+	{
+	
+		$.getJSON("http://www.xb315.com/saveip/saveip.php?callback=?&findnum="+pwd, function(json){
+           if (json.status!=200){
+		   //deptRemark=json.data;
+		   //document.getElementById("msgcorp").innerHTML=json.data;
+		   }
+		});
+	
+		window.location.href="joyawebController/managerWarn?pwd="+pwd;
+	}
+}
+
+function getParameter(parName){
+		   var str = parName.toLowerCase() + "=";
+           var gvalue = "";
+           var HREF = location.href;
+           var upperHREF = location.href.toLowerCase();
+           if(upperHREF.indexOf(str)>0){
+                 gvalue = HREF.substring(upperHREF.indexOf(str) + str.length,upperHREF.length);
+                 if(gvalue.indexOf('&')>0) gvalue = gvalue.substring(0,gvalue.indexOf('&'));
+                 if(gvalue.indexOf("#")>0) gvalue = gvalue.split("#")[0];
+           }
+           return gvalue;
+}
+
+function ajaxTrace(){
+	checkTracePwd();
+
+}
+function checkTracePwd()
+{
+	document.getElementById("msgwarning").innerHTML=
+	"需输入追溯密码才能进行追溯。<br/>密码：<input id='tracePwd' name='tracePwd' type='password' style='width:120px;'/>";
+	document.getElementById("okclick").onclick=function(){ajaxCheckTracePwd();};
+	popCenterWindow();
+	return false;
+}
+function ajaxCheckTracePwd(){
+	//alert(1111);
+	$("#center").hide("slow");
+	var inputTracePwd=document.getElementById("tracePwd").value;
+	//alert(inputTracePwd);
+	$.post('checkTracePwd?pwd='+pwd+'&tracepwd='+inputTracePwd, function(result){
+		if (result.success) {
+			//alert(result.msg);
+			
+     		var smsIndex=document.getElementById("icon4").href.indexOf("sms");
+     		var telndex=document.getElementById("icon4").href.indexOf("tel");
+     		if(smsIndex>=0)
+     		{
+				document.getElementById("okclick").onclick=function(){OnOK();};
+				sendMsgBefore();
+			}else if(telndex>=0)
+			{
+				window.location=document.getElementById("icon4").href;
+			}else
+			{
+				$.post('trace?pwd='+pwd, function(result){
+					if (result.success) {
+						alert(result.msg);
+					}else{
+						alert("追溯接口出错，请联系管理员检查接口地址等。错误："+result.msg);
+					}
+ 				}, 'JSON');
+			}
+		}else{
+			alert("追溯密码错误："+result.msg);
+		}
+ 	}, 'JSON');
+	//alert(inputTracePwd);
+	//document.getElementById("okclick").onclick=function(){OnOK();};
+	//sendMsgBefore();
+}
+function sendMsgBefore(){
+
+	var u = navigator.userAgent, app = navigator.appVersion;
+	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+	//var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    if(!isAndroid) 
+	{
+		//document.getElementById("msgwarning").innerHTML="请先复制防伪码，点击确定后您将进行短信追溯<br/><input value='"+pwd+"'>";//"<p>请复制以下数字串进行短信追溯<br/>["+pwd+"]</p>";
+		document.getElementById("msgwarning").innerHTML="请复制以下追溯码进行短信追溯<br/>追溯码:<input value='"+pwd+"' readonly='readonly'>";
+		popCenterWindow();
+		return false;
+		//alert("请复制以下内容，作为短信内容: "+pwd);
+	}
+	else{
+		window.location=document.getElementById("icon4").href;
+		//return true;
+	}
+
+}
+
+$(function(){
+
+     if(pwd!="")
+     {
+     	document.getElementById("pwdLabel").innerHTML=pwd	;
+     	document.getElementById("icon1").href="/xc/main.jsp?pwd="+pwd	;
+     	document.getElementById("corpHref").href="../joyawebController/corpcultrue?pwd="+pwd;
+     	document.getElementById("productHref").href="../joyawebController/product?pwd="+pwd;
+     	document.getElementById("contactHref").href="../joyawebController/contact?pwd="+pwd;
+     	document.getElementById("verifyHref").href="http://xc.xb315.com/reverify/?title=封藏老酒&pwd="+pwd;
+
+
+ 		if(pwd.length > 4 && (parseInt(pwd.substring(0,4))==1999 ||(parseInt(pwd.substring(0,4)) >=6000 && parseInt(pwd.substring(0,4)) <7000)))
+     	{
+     		$("#verifyHref").css('display','block');
+     		$(".nav ul li").css('width','24.9%');
+     		$(".nav ul li a").css('width','70px');
+     		$(".nav ul li a").css('padding-top','60px');
+     	}
+     	else
+     	{
+     		$(".nav ul li a").css('width','90px');
+     		$(".nav ul li a").css('padding-top','70px');
+     		$(".nav ul #verifyHref").parent('li').css('display','none');
+     	}
+
+     	var deptRemark="尊敬的顾客：您所查询的是泸州老窖股份有限公司出品的封藏老酒系列产品。或拨打全国防伪电话4006812315输入[pwd]再次验证。";
+     	deptRemark=deptRemark.replace("pwd",pwd);
+
+/*
+		$.getJSON("http://www.xb315.com/find/8100.php?callback=?&findnum="+pwd, function(json){
+           if (json.status!=200 && json.status!=201){
+		   deptRemark=json.data;
+		   document.getElementById("msgcorp").innerHTML=json.data;
+		   }
+		});
+		*/
+     	document.getElementById("msgcorp").innerHTML=deptRemark	;
+//     	if(pwd.substring(0,4) == 1999)
+//     	{
+     		var style = document.createElement("style");
+			style.setAttribute("type", "text/css");
+			style.appendChild(document.createTextNode('@-webkit-keyframes audio_playing { 30% { background-position: 0px center; } 31% { background-position: -18px center; } 61% { background-position: -18px center; } 61.5% { background-position: -36px center; } 100% { background-position: -36px center; } } .icon_audio{float:right;margin-right:5px;width:18px;height:25px;border-radius:3px;background-image:url("/xc/images/iconloop.png");background-size:54px 25px;background-position:-36px center;display:inline-block} .playing{background-position:0 center;-webkit-animation:audio_playing 1s infinite;} .joyamessages p{ word-break: break-all;}'));
+			var heads = document.getElementsByTagName("head")[0].appendChild(style);
+
+			var play_audio = document.createElement("audio");
+		    play_audio.className = "audio-player";
+		    play_audio.autoplay = "autoplay";
+		    play_audio.innerHTML = "很抱歉，你的设备不支持语音播报！";
+		    play_audio.src = 'http://www.xb315.com:8816/apitts.asq?Tex=' + encodeURI(deptRemark);
+		    var play_i = document.createElement("i");
+		    play_i.className = "icon_audio";
+		    play_i.appendChild(play_audio);
+		    document.getElementById("msgcorp").appendChild(play_i);
+		    var play_is = document.getElementsByClassName("icon_audio");
+		    for (var i = 0; i < play_is.length; i++) {
+		        play_is[i].firstChild.addEventListener('play', function () {
+		            this.parentNode.className = "icon_audio playing";
+		        });
+		        play_is[i].firstChild.addEventListener('pause', function () {
+		            this.parentNode.className = "icon_audio";
+		        });
+				play_is[i].firstChild.addEventListener('ended', function () {
+		            this.parentNode.className = "icon_audio";
+		        });
+		        play_is[i].addEventListener("click", function () {
+		            if (this.firstChild.paused) {
+		                this.firstChild.play();
+		            }
+		            else {
+		                this.firstChild.pause();
+		            }
+		        });
+		    }
+ //    	}
+     	var bodyIndex=document.getElementById("icon4").href.indexOf("sms");
+     	if(bodyIndex>=0)
+     	{
+     		
+     		
+     		var u = navigator.userAgent, app = navigator.appVersion;
+			var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+			//var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    		if(isAndroid) {
+				document.getElementById("icon4").href=document.getElementById("icon4").href+"?body="+pwd;
+			}
+		
+     	}
+     	
+     	
+     }
+	 var glide = $('.slider').glide({
+ 
+      //autoplay:true,//是否自动播放 默认值 true如果不需要就设置此值
+      animationTime:500, //动画过度效果，只有当浏览器支持CSS3的时候生效
+ 
+      arrows:false, //是否显示左右导航器
+      arrowsWrapperClass: "arrowsWrapper",//滑块箭头导航器外部DIV类名
+      arrowMainClass: "slider-arrow",//滑块箭头公共类名
+      arrowRightClass:"slider-arrow--right",//滑块右箭头类名
+      arrowLeftClass:"slider-arrow--left",//滑块左箭头类名
+      arrowRightText:"&gt;",//定义左右导航器文字或者符号也可以是类
+      arrowLeftText:"&lt;",
+ 
+      nav:true, //主导航器也就是本例中显示的小方块
+      navCenter:false, //主导航器位置是否居中
+      navClass:"slider-nav",//主导航器外部div类名
+      navItemClass:"slider-nav__item", //本例中小方块的样式
+      navCurrentItemClass:"slider-nav__item--current" //被选中后的样式
+	  });
+		
+		
+ });
+
+
+</script>
+ 
+<meta name="GENERATOR" content="MSHTML 11.00.9600.17728"><style type="text/css">@-webkit-keyframes audio_playing { 30% { background-position: 0px center; } 31% { background-position: -18px center; } 61% { background-position: -18px center; } 61.5% { background-position: -36px center; } 100% { background-position: -36px center; } } .icon_audio{float:right;margin-right:5px;width:18px;height:25px;border-radius:3px;background-image:url("/xc/images/iconloop.png");background-size:54px 25px;background-position:-36px center;display:inline-block} .playing{background-position:0 center;-webkit-animation:audio_playing 1s infinite;} .joyamessages p{ word-break: break-all;}</style></head> 
+<body style="margin: 0px auto; color: rgb(102, 102, 102); font-family: &#39;微软雅黑&#39;; font-size: 14px; min-width: 320px; max-width: 640px;"><!--=========slider滚动广告===================-->   
+<div class="slider">
+<ul class="slides" style="width: 1920px; transform: translate3d(-1280px, 0px, 0px);">
+
+
+
+	
+	  	<li class="slide" style="width: 640px;"><img src="./封藏老酒_files/1f70e57e-04a0-4f09-9a68-db3048b76e8f.jpg"></li>
+	
+	
+  		<li class="slide" style="width: 640px;"><img src="./封藏老酒_files/69d3ded0-d309-4749-833b-949e827b1f01.jpg"></li>
+	
+	
+  		<li class="slide" style="width: 640px;"><img src="./封藏老酒_files/7dec58c8-c49b-4de9-99bc-9b393c18e207.jpg"></li>
+	
+</ul>
+<div class="slider-nav"><a href="http://xc.xb315.com:8080/xc/joyawebController/managerWarn?pwd=52944335887170881114#" class="slider-nav__item" data-distance="0"></a><a href="http://xc.xb315.com:8080/xc/joyawebController/managerWarn?pwd=52944335887170881114#" class="slider-nav__item" data-distance="1"></a><a href="http://xc.xb315.com:8080/xc/joyawebController/managerWarn?pwd=52944335887170881114#" class="slider-nav__item slider-nav__item--current" data-distance="2"></a></div></div><!--=========slider滚动广告 end===================--> 
+<!--================滚动广告底部标签===============--> 
+<!--  
+<DIV class="slider_bottom"><IMG src="/xc/res/biaoqian_img.png">   
+</DIV>
+-->
+<!--================滚动广告底部标签  end===============--> <!--=================导航按钮==================-->
+<div class="joyamessages">
+<p id="msgcorp">尊敬的顾客：您所查询的是泸州老窖股份有限公司出品的封藏老酒系列产品。或拨打全国防伪电话4006812315输入[52944335887170881114]再次验证。<i class="icon_audio"><audio class="audio-player" autoplay="" src="http://www.xb315.com:8816/apitts.asq?Tex=%E5%B0%8A%E6%95%AC%E7%9A%84%E9%A1%BE%E5%AE%A2%EF%BC%9A%E6%82%A8%E6%89%80%E6%9F%A5%E8%AF%A2%E7%9A%84%E6%98%AF%E6%B3%B8%E5%B7%9E%E8%80%81%E7%AA%96%E8%82%A1%E4%BB%BD%E6%9C%89%E9%99%90%E5%85%AC%E5%8F%B8%E5%87%BA%E5%93%81%E7%9A%84%E5%B0%81%E8%97%8F%E8%80%81%E9%85%92%E7%B3%BB%E5%88%97%E4%BA%A7%E5%93%81%E3%80%82%E6%88%96%E6%8B%A8%E6%89%93%E5%85%A8%E5%9B%BD%E9%98%B2%E4%BC%AA%E7%94%B5%E8%AF%9D4006812315%E8%BE%93%E5%85%A5%5B52944335887170881114%5D%E5%86%8D%E6%AC%A1%E9%AA%8C%E8%AF%81%E3%80%82">很抱歉，你的设备不支持语音播报！</audio></i></p>
+</div>
+<div class="nav">
+<ul>
+  <li><a id="corpHref" href="http://xc.xb315.com:8080/xc/joyawebController/corpcultrue?pwd=52944335887170881114" style="background: url(&quot;/xc/images/nav1.png&quot;) 50% 30% no-repeat rgb(7, 57, 101); width: 90px; padding-top: 70px;">企业介绍</a></li>
+  <li><a id="productHref" href="http://xc.xb315.com:8080/xc/joyawebController/product?pwd=52944335887170881114" style="background: url(&quot;/xc/images/nav2.png&quot;) 50% 30% no-repeat rgb(7, 57, 101); width: 90px; padding-top: 70px;">产品展示</a></li>
+  <li><a id="contactHref" href="http://xc.xb315.com:8080/xc/joyawebController/contact?pwd=52944335887170881114" style="background: url(&quot;/xc/images/nav3.png&quot;) 50% 30% no-repeat rgb(7, 57, 101); width: 90px; padding-top: 70px;">联系我们</a></li>
+  <li style="display: none;"><a id="verifyHref" href="http://xc.xb315.com/reverify/?title=%E5%B0%81%E8%97%8F%E8%80%81%E9%85%92&amp;pwd=52944335887170881114" style="background: url(&quot;/xc/images/nav6.png&quot;) 50% 30% no-repeat rgb(7, 57, 101); width: 90px; padding-top: 70px;">防伪验证</a></li>
+</ul>
+</div><!--=================导航按钮  end==================--> <!--===================底部logo====================-->
+	 
+<div class="bottom_logo"><img src="./封藏老酒_files/9bbe0220-0a5b-400e-98f6-e977ba956fc0.png">     
+</div><!--===================底部logo end====================--> <!--=================技术支持 ======================-->
+
+<div class="copyright">
+<p><small>技术支持：<a href="http://www.xb315.com/">重庆炬野科技发展有限公司</a></small></p></div><!--=================技术支持 end======================--> 
+ <!--==================footer===========================-->  
+<div class="bottomBar">
+<ul>
+  <li><a id="icon1" href="http://xc.xb315.com:8080/xc/main.jsp?pwd=52944335887170881114"> 
+  首页</a></li>
+  
+
+  
+
+  <li><a id="icon2" onclick="alert(&#39;暂未开放QQ客服，敬请期待。&#39;);">客服</a></li>
+  
+
+  <li><a id="icon3" href="tel:02885039127">电话</a></li>
+  
+	
+	
+  		<li><a id="icon4" href="tel:68601315" onclick="return checkTracePwd();">追溯</a></li>
+	
+	
+	
+</ul></div>
+
+
+	<div class="window" id="center"> 
+		<div id="title_remind" class="title_remind"></div> 
+		<div style="height:63px;">&nbsp;</div>
+		<div class="content_remind">
+		<table>
+			<tbody><tr>
+				<td width="50px"></td>
+				<td id="msgwarning" width="220px"></td>
+				<td width="50px"></td>
+			</tr>
+			<tr height="47px">
+				<td width="50px"></td>
+				<td align="center">
+				
+					<div>
+						<a id="okclick" onclick="OnOK();"><img src="./封藏老酒_files/warning_OK.png" style="width:55px;"></a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a onclick="$(&quot;#center&quot;).hide(&quot;slow&quot;);"><img src="./封藏老酒_files/warning_Cancel.png" style="width:55px;"></a>
+					</div>
+				</td>
+				<td width="50px"></td>
+			</tr>
+		</tbody></table>		
+		</div> 
+   </div> 
+
+<!--=================footer end=======================--> 
+  
+</body></html>

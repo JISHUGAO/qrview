@@ -1,0 +1,60 @@
+body {
+	margin: 0px; padding: 0px;
+}
+p {
+	margin: 0px; padding: 0px;
+}
+ul {
+	margin: 0px; padding: 0px;
+}
+ol {
+	margin: 0px; padding: 0px;
+}
+li {
+	margin: 0px; padding: 0px;
+}
+h1 {
+	margin: 0px; padding: 0px;
+}
+h2 {
+	margin: 0px; padding: 0px;
+}
+h3 {
+	margin: 0px; padding: 0px;
+}
+dl {
+	margin: 0px; padding: 0px;
+}
+dd {
+	margin: 0px; padding: 0px;
+}
+dt {
+	margin: 0px; padding: 0px;
+}
+img {
+	border: 0px currentColor; border-image: none;
+}
+ul {
+	list-style: none;
+}
+ol {
+	list-style: none;
+}
+li {
+	list-style: none;
+}
+h1 {
+	font-size: 100%; font-weight: 100;
+}
+h2 {
+	font-size: 100%; font-weight: 100;
+}
+h3 {
+	font-size: 100%; font-weight: 100;
+}
+a {
+	color: rgb(153, 153, 153); text-decoration: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+body {
+	margin: 0px auto; color: rgb(102, 102, 102); font-family: "Î¢ÈíÑÅºÚ"; font-size: 14px; min-width: 320px; max-width: 640px;
+}
