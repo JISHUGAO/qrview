@@ -4,6 +4,12 @@ namespace Home\Controller;
 class IndexController extends BaseController
 {
 
+    private $urls = array(
+        'getCompany' => '/jcsj/get_company/head',            //获取公司信息
+        'getPicture' => '/jcsj/get_picture/head',            //获取图片
+        'getCommodityList' => '/jcsj/get_commodity_list/get_commodity_list', //获得商品详情
+    );
+
     public function _initialize()
     {
         parent::_initialize();
@@ -11,7 +17,7 @@ class IndexController extends BaseController
 
         $this->company = session('company');
         if (!$this->company) {
-            $companyResult = $this->httpRequest('/jcsj/get_company/head');//获取公司信息
+            $companyResult = $this->httpRequest($this->urls['getCompany']);//获取公司信息
             session('company', $companyResult['data'][0]);
             $this->company = $companyResult['data'][0];
         }
@@ -21,7 +27,7 @@ class IndexController extends BaseController
 
     public function index()
     {
-        $imgsResult = $this->httpRequest('/jcsj/get_picture/head');//获取图片
+        $imgsResult = $this->httpRequest($this->urls['getPicture']);//获取图片
         if ($imgsResult['status'] !== 'yes') {
             $this->error();
         }
@@ -45,7 +51,13 @@ class IndexController extends BaseController
      */
     public function show_product()
     {
+        $productResult = $this->httpRequest($this->urls['getCommodityList']);//获得商品详情
+        if ($productResult['status'] !== 'yes') {
+            $this->error();
+        }
+
         $title = '产品展示';
+        $this->assign('product', $productResult['data']);
         $this->assign('title', $title);
         $this->display('show');
     }
