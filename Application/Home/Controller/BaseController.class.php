@@ -14,6 +14,11 @@ use Common\Utils\Http;
 class BaseController extends Controller
 {
 
+    public function _initialize()
+    {
+        $this->assign('title', '');
+    }
+
     const GATEWAY = 'http://101.201.220.13:8069/api';
 
     public function httpRequest($path, $params, $method = 'get')
@@ -21,7 +26,7 @@ class BaseController extends Controller
         if ($method === 'get') {
             $result = Http::get(self::GATEWAY.$path, $params);
         }
-
-        return $result;
+        //var_dump($result);die;
+        return json_decode($result, true);
     }
 }

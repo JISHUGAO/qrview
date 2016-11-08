@@ -7,7 +7,7 @@
     <meta name="keywords" content="">
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
-    <title>Hello Amaze UI</title>
+    <title>{$title}</title>
 
     <!-- Set render engine for 360 browser -->
     <meta name="renderer" content="webkit">
@@ -49,52 +49,26 @@
     </style>
 </head>
 <body class="am-text-sm">
-<!-- banner begin -->
-<div data-am-widget="slider" class="am-slider am-slider-a1" data-am-slider='{&quot;directionNav&quot;:false}' >
-    <ul class="am-slides">
-        <volist name="imgs" id="img">
-            <li>
-                <img src="data:image/png;base64,{$img.image}">
 
-            </li>
-        </volist>
+<div>
+    <img src=""/>
+</div>
 
+<div class="am-g top-border-orange">
+    <span class="title" style="margin-left: 30px;">联系我们</span>
+    <ul style="list-style: none;" >
+        <li>电话：{$info.phone}</li>
+        <li>传真：{$info.fax}</li>
+        <li>邮箱：{$info.email}</li>
+        <li>地址：{$info.province}{$info.city}{$info.street}</li>
     </ul>
 </div>
-<!-- banner end -->
-
-<!-- content begin -->
-<div class="top-border-orange am-padding">
-    <p>
-        内容
-    </p>
-</div>
-<!-- content end -->
-
-<!-- menu begin -->
-<div class="top-border-orange">
-    <ul class="am-avg-sm-3 am-avg-md-3 am-avg-lg-3">
-        <li>
-            <a href="{:U('introduction')}" style="background: url(__PUBLIC__/icon/nav1.png) 50% 30% no-repeat rgb(7, 57, 101);">
-            企业介绍
-            </a>
-        </li>
-        <li>
-            <a href="{:U('show_product')}" style="background: url(__PUBLIC__/icon/nav2.png) 50% 30% no-repeat rgb(7, 57, 101);">产品展示</a>
-        </li>
-        <li>
-            <a href="{:U('about_us')}" style="background: url(__PUBLIC__/icon/nav3.png) 50% 30% no-repeat rgb(7, 57, 101);">联系我们</a>
-        </li>
-    </ul>
-</div>
-<!-- menu end -->
-
 <!-- logo begin -->
 <div>
     <img class="am-img-responsive" src="__PUBLIC__/img/9bbe0220-0a5b-400e-98f6-e977ba956fc0.png" alt=""/>
 </div>
-
 <!-- logo end -->
+
 <include file="Common/bottom"/>
 
 <!--在这里编写你的代码-->
