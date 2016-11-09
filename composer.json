@@ -1,14 +1,14 @@
 {
-    "name": "topthink/thinkphp",
-    "description": "the ThinkPHP Framework",
-    "type": "framework",
+    "name": "gavin-gao/qrview",
+    "description": "view info by qrcode",
+    "type": "project",
     "keywords": ["framework","thinkphp","ORM"],
     "homepage": "http://thinkphp.cn/",
     "license": "Apache2",
     "authors": [
         {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
+            "name": "gavin-gao",
+            "email": "1990gws@gmail.com"
         }
     ],
     "require": {
