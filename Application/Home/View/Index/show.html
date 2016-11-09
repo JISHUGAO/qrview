@@ -49,6 +49,20 @@
     </style>
 </head>
 <body class="am-text-sm">
+<div class="am-g top-border-orange">
+    <span class="title" style="margin-left: 30px;">联系我们</span>
+    <volist name="products" id="product">
+        <ul>
+            <li>
+            <img src="data:image/png;base64,{$product.image}"/>
+            </li>
+            <li>品名:{$product.name}</li>
+            <volist name="product['list']" id="item">
+                <li>{$item.name}</li>
+            </volist>
+        </ul>
+    </volist>
+</div>
 
 <!-- logo begin -->
 <div>
