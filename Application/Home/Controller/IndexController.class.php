@@ -9,12 +9,21 @@ class IndexController extends BaseController
         'getPicture' => '/jcsj/get_picture/head',            //获取图片
         'getCommodityList' => '/jcsj/get_commodity_list/get_commodity_list', //获得商品详情
         'getSearch' => '/kcgl/get_search',   //商品真伪查询
+
+        'getBatchList' => '/kcgl/get_batch_list', //商品批次
+        'getMaterialBatch' => '/kcgl/get_material_batch', //商品的原材料信息
+        'getCommodityMaking' => '/kcgl/get_commodity_making', //商品加工过程
+        'getCommodityProduce' => '/kcgl/get_commodity_produce', //商品生产过程
+        'getCommodityCheck' => '/kcgl/get_commodity_check', //商品质检报告
     );
 
     public function _initialize()
     {
         parent::_initialize();
-        $this->assign('title', '');
+        if (!session('code')) {
+            session('code', I('get.code', 20010001, 'intval'));
+        }
+        $this->code = session('code');
 
         $this->company = session('company');
         if (!$this->company) {
@@ -27,6 +36,8 @@ class IndexController extends BaseController
         if ($imgsResult['status'] !== 'yes') {
             $this->error();
         }
+
+        $this->assign('title', $this->company['name']);
         $this->assign('imgs', $imgsResult['data']);
         $this->assign('company', $this->company);
     }
@@ -34,8 +45,9 @@ class IndexController extends BaseController
     public function index()
     {
 
-        //$searchResult = $this->httpRequest($this->urls['getSearch']);//获取图片
+        $searchResult = $this->httpRequest($this->urls['getSearch']."/".$this->code);//获取图片
 
+        $this->assign('content', $searchResult['data']);
         $this->display();
     }
 
@@ -83,6 +95,23 @@ class IndexController extends BaseController
      */
     public function trace()
     {
+        /*'getBatchList' => 'kcgl/get_batch_list', //商品批次
+        'getMaterialBatch' => 'kcgl/get_material_batch', //商品的原材料信息
+        'getCommodityMaking' => 'kcgl/get_commodity_making', //商品加工过程
+        'getCommodityProduce' => 'kcgl/get_commodity_produce', //商品生产过程
+        'getCommodityCheck' => 'kcgl/get_commodity_check', //商品质检报告*/
+        $batchResult = $this->httpRequest($this->urls['getBatchList'].'/'.$this->code);
+        $materialBatchResult = $this->httpRequest($this->urls['getMaterialBatch'].'/'.$this->code);
+        $commodityMakingResult = $this->httpRequest($this->urls['getCommodityMaking'].'/'.$this->code);
+        $commodityProduceResult = $this->httpRequest($this->urls['getCommodityProduce'].'/'.$this->code);
+        $commodityCheckResult = $this->httpRequest($this->urls['getCommodityCheck'].'/'.$this->code);
+
+        var_dump($batchResult);echo '<br/>';
+        var_dump($materialBatchResult);echo '<br/>';
+        var_dump($commodityMakingResult);echo '<br/>';
+        var_dump($commodityProduceResult);echo '<br/>';
+        var_dump($commodityCheckResult);echo '<br/>';
+        die;
 
         $this->display();
     }
