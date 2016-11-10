@@ -106,13 +106,18 @@ class IndexController extends BaseController
         $commodityProduceResult = $this->httpRequest($this->urls['getCommodityProduce'].'/'.$this->code);
         $commodityCheckResult = $this->httpRequest($this->urls['getCommodityCheck'].'/'.$this->code);
 
-        var_dump($batchResult);echo '<br/>';
-        var_dump($materialBatchResult);echo '<br/>';
-        var_dump($commodityMakingResult);echo '<br/>';
-        var_dump($commodityProduceResult);echo '<br/>';
-        var_dump($commodityCheckResult);echo '<br/>';
-        die;
+        //var_dump($batchResult['data']);echo '<br/>';
+        //var_dump($materialBatchResult);echo '<br/>';
+        //var_dump($commodityMakingResult);echo '<br/>';
+        //var_dump($commodityProduceResult);echo '<br/>';
+        //var_dump($commodityCheckResult);echo '<br/>';
+        //die;
 
+        $this->assign('batch', $batchResult['data']);
+        $this->assign('materialBatch', $materialBatchResult['data']);
+        $this->assign('commodityMaking', $commodityMakingResult['data']);
+        $this->assign('commodityProduce', $commodityProduceResult['data']);
+        $this->assign('commodityCheck', $commodityCheckResult['data']);
         $this->display();
     }
 }

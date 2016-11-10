@@ -50,6 +50,84 @@
 </head>
 <body class="am-text-sm">
 
+<if condition="$batch neq ''">
+    <div class="am-g top-border-orange">
+        <span class="title" style="margin-left: 30px;">批次信息</span>
+            <ul>
+                <li>
+                    批次编号：{$batch.code}
+                </li>
+                <li>批次名称：{$batch.name}</li>
+                <li>商品名称：{$batch.commodity}</li>
+                <li>批次号：{$batch.batch}</li>
+            </ul>
+    </div>
+</if>
+
+<if condition="$materialBatch neq ''">
+    <div class="am-g top-border-orange">
+        <span class="title" style="margin-left: 30px;">原材料信息</span>
+        <volist name="materialBatch" id="item">
+            <ul>
+                <li>原材料：{$item.materia}</li>
+                <li>供应商：{$item.supplier}</li>
+                <li>原材料编号：{$item.code}</li>
+                <li>原材料批次名：{$item.name}</li>
+                <li>原材料批次：{$item.batch}</li>
+            </ul>
+        </volist>
+
+    </div>
+</if>
+
+<if condition="$commodityMaking neq ''">
+    <div class="am-g top-border-orange">
+        <span class="title" style="margin-left: 30px;">商品加工过程</span>
+        <volist name="commodityMaking" id="item">
+            <ul>
+                <li>加工名称：{$item.name}</li>
+                <li>加工编号：{$item.code}</li>
+                <li>加工类型：{$item.type}</li>
+                <li>加工说明：{$item.message}</li>
+            </ul>
+
+        </volist>
+
+    </div>
+</if>
+
+<if condition="$commodityProduce neq ''">
+    <div class="am-g top-border-orange">
+        <span class="title" style="margin-left: 30px;">商品生产过程</span>
+        <volist name="commodityProduce" id="item">
+            <ul>
+                <li>生产加工名称：{$item.name}</li>
+                <li>生产加工编号：{$item.code}</li>
+                <li>生产加工类型：{$item.type}</li>
+                <li>生产加工说明：{$item.message}</li>
+            </ul>
+
+        </volist>
+
+    </div>
+</if>
+
+<if condition="$commodityCheck neq ''">
+    <div class="am-g top-border-orange">
+        <span class="title" style="margin-left: 30px;">质检报告</span>
+        <volist name="commodityCheck" id="item">
+            <ul>
+                <li>名称：{$item.name}</li>
+                <li>类型：{$item.type}</li>
+                <li>编号：{$item.code}</li>
+                <li>质检公司：{$item.company}</li>
+                <li>质检说明：{$item.message}</li>
+            </ul>
+
+        </volist>
+
+    </div>
+</if>
 
 <!-- logo begin -->
 <div>
