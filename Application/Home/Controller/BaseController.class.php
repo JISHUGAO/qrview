@@ -21,7 +21,7 @@ class BaseController extends Controller
 
     const GATEWAY = 'http://101.201.220.13:8069/api';
 
-    public function httpRequest($path, $params, $method = 'get')
+    public function httpRequest($path, $params = array(), $method = 'get')
     {
         if ($method === 'get') {
             $result = Http::get(self::GATEWAY.$path, $params);
