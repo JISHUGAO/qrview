@@ -24,7 +24,14 @@ class BaseController extends Controller
     public function httpRequest($path, $params = array(), $method = 'get')
     {
         if ($method === 'get') {
-            $result = Http::get(self::GATEWAY.$path, $params);
+            $url = self::GATEWAY.$path;
+            $token = md5($url.json_encode($params));
+            $result = S($token);
+            if (!$result) {
+                $result = Http::get($url, $params);
+                S($token, $result);
+            }
+
         }
         //var_dump($result);die;
         return json_decode($result, true);

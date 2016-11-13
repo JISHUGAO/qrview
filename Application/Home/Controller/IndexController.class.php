@@ -6,7 +6,7 @@ class IndexController extends BaseController
 
     private $urls = array(
         'getCompany' => '/jcsj/get_company/head',            //获取公司信息
-        'getPicture' => '/jcsj/get_picture/head',            //获取图片
+        'getPicture' => '/jcsj/get_picture',            //获取图片
         'getCommodityList' => '/jcsj/get_commodity_list/get_commodity_list', //获得商品详情
         'getSearch' => '/kcgl/get_search',   //商品真伪查询
 
@@ -32,11 +32,13 @@ class IndexController extends BaseController
             $this->company = $companyResult['data'][0];
         }
 
-        $imgsResult = $this->httpRequest($this->urls['getPicture']);//获取图片
+        $imgsResult = $this->httpRequest($this->urls['getPicture'].'/head');//获取图片
+        $bottomImgsResult = $this->httpRequest($this->urls['getPicture'].'/body');//获取图片
         if ($imgsResult['status'] !== 'yes') {
             $this->error();
         }
 
+        $this->assign('bottomImg', $bottomImgsResult['data']);
         $this->assign('title', $this->company['name']);
         $this->assign('imgs', $imgsResult['data']);
         $this->assign('company', $this->company);
