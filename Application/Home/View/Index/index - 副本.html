@@ -35,24 +35,16 @@
     <link rel="stylesheet" href="__PUBLIC__/css/app.css">
     <style>
         .top-border-orange ul li a{
-            height:12em;
+            background:rgb(19, 81, 136);
+
             margin:10px auto;
             display:block;
             width:80%;
             text-align: center;
-            color:black;
-            font-size:1em;
-        }
-        .top-border-orange ul li{
-            display:inline-block;
-        }
-        .top-border-orange img {
-            width:80%;
-            display:block;
-            margin:4px auto;
-        }
-        .top-border-orange li span{
-            font-weight:bold;
+            border-radius: 5px;
+            border: 2px solid rgb(234, 212, 150);
+
+            color: rgb(245, 245, 245);
         }
     </style>
 </head>
@@ -80,25 +72,39 @@
 <!-- content end -->
 
 <!-- menu begin -->
-<div class="top-border-orange">
-    <ul class="am-avg-sm-3 am-avg-md-3 am-avg-lg-3" style="text-align: center;">
+<!--<div class="top-border-orange">
+    <ul class="am-avg-sm-3 am-avg-md-3 am-avg-lg-3">
         <li>
-            <a href="{:U('introduction')}" >
-                <img src="__PUBLIC__/icon/top_1.png"/>
-                <span>企业介绍</span>
+            <a href="{:U('introduction')}" style="background: url(__PUBLIC__/icon/nav1.png) 50% 30% no-repeat rgb(7, 57, 101);">
+            企业介绍
             </a>
         </li>
         <li>
-            <a href="{:U('show_product')}">
-                <img src="__PUBLIC__/icon/top_2.png"/>
-                <span>产品展示</span>
+            <a href="{:U('show_product')}" style="background: url(__PUBLIC__/icon/nav2.png) 50% 30% no-repeat rgb(7, 57, 101);">产品展示</a>
+        </li>
+        <li>
+            <a href="{:U('about_us')}" style="background: url(__PUBLIC__/icon/nav3.png) 50% 30% no-repeat rgb(7, 57, 101);">联系我们</a>
+        </li>
+    </ul>
+</div>-->
+<div class="top-border-orange">
+    <ul class="am-avg-sm-3 am-avg-md-3 am-avg-lg-3">
+        <li>
+            <a href="{:U('introduction')}">
+                <span class="am-icon-list" style="display:block;font-size:3.5em"></span>
+                <span style="display:block;">企业介绍</span>
+            </a>
+        </li>
+        <li>
+            <a href="{:U('show_product')}" >
+                <span class="am-icon-signal" style="display:block;font-size:3.5em;"></span>
+                <span style="display:block;">产品展示</span>
             </a>
         </li>
         <li>
             <a href="{:U('about_us')}">
-                <img src="__PUBLIC__/icon/top_3.png"/>
-                <span>联系我们</span>
-
+                <span class="am-icon-file" style="display:block;font-size:3.5em;"></span>
+                <span style="display:block;">联系我们</span>
             </a>
         </li>
     </ul>
@@ -106,7 +112,9 @@
 <!-- menu end -->
 
 <!-- logo begin -->
-
+<div>
+    <img class="am-img-responsive" src="__PUBLIC__/img/9bbe0220-0a5b-400e-98f6-e977ba956fc0.png" alt=""/>
+</div>
 
 <!-- logo end -->
 <include file="Common/bottom"/>
