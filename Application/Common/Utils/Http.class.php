@@ -13,6 +13,8 @@ class Http
     public static function get($url, $params = array())
     {
         $url = $url. ($params == array() ? '': '?'.http_build_query($params));
+        //print_r($url);
+        //echo "<br/>";
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true) ;
         $output = curl_exec($curl);

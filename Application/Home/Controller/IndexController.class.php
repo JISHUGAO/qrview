@@ -15,13 +15,17 @@ class IndexController extends BaseController
         'getCommodityMaking' => '/kcgl/get_commodity_making', //商品加工过程
         'getCommodityProduce' => '/kcgl/get_commodity_produce', //商品生产过程
         'getCommodityCheck' => '/kcgl/get_commodity_check', //商品质检报告
+
+        'getAgentList' => '/jcsj/get_agent_list', //追溯经销商
+        'getVideo' => '/batch/get_video/11', //获得视频
+        'getCompany' => '/jcsj/get_company_list', //获得公司
     );
 
     public function _initialize()
     {
         parent::_initialize();
         if (!session('code')) {
-            session('code', I('get.code', 20010001, 'intval'));
+            session('code', I('get.code', 1001001, 'intval'));
         }
         $this->code = session('code');
 
@@ -59,6 +63,9 @@ class IndexController extends BaseController
     public function introduction()
     {
         $title = '企业介绍';
+        $companyResult = $this->httpRequest($this->urls['getCompany'].'/'.$this->code);
+//var_dump($companyResult);die;
+        $this->assign('company', $companyResult['data']);
         $this->assign('title', $title);
         $this->display();
     }
@@ -107,6 +114,7 @@ class IndexController extends BaseController
         $commodityMakingResult = $this->httpRequest($this->urls['getCommodityMaking'].'/'.$this->code);
         $commodityProduceResult = $this->httpRequest($this->urls['getCommodityProduce'].'/'.$this->code);
         $commodityCheckResult = $this->httpRequest($this->urls['getCommodityCheck'].'/'.$this->code);
+        $video = $this->httpRequest($this->urls['getVideo']);
 
         //var_dump($batchResult['data']);echo '<br/>';
         //var_dump($materialBatchResult);echo '<br/>';
@@ -114,7 +122,8 @@ class IndexController extends BaseController
         //var_dump($commodityProduceResult);echo '<br/>';
         //var_dump($commodityCheckResult);echo '<br/>';
         //die;
-
+//var_dump($video);die;
+        $this->assign('videoHtml', $video['data']);
         $this->assign('batch', $batchResult['data']);
         $this->assign('materialBatch', $materialBatchResult['data']);
         $this->assign('commodityMaking', $commodityMakingResult['data']);
@@ -129,6 +138,9 @@ class IndexController extends BaseController
      */
     public function queryMerchant()
     {
-
+        $password = I('get.password');
+        $agent = $this->httpRequest($this->urls['getAgentList'].'/'.$password, ['code' => $this->code]);
+        //print_r($agent);die;
+        $this->ajaxReturn($agent);
     }
 }
