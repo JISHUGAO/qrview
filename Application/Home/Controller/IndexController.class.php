@@ -18,7 +18,7 @@ class IndexController extends BaseController
 
         'getAgentList' => '/jcsj/get_agent_list', //追溯经销商
         'getVideo' => '/batch/get_video/11', //获得视频
-        'getCompany' => '/jcsj/get_company_list', //获得公司
+        'getCompanyList' => '/jcsj/get_company_list', //获得公司简介
     );
 
     public function _initialize()
@@ -63,7 +63,7 @@ class IndexController extends BaseController
     public function introduction()
     {
         $title = '企业介绍';
-        $companyResult = $this->httpRequest($this->urls['getCompany'].'/'.$this->code);
+        $companyResult = $this->httpRequest($this->urls['getCompanyList'].'/'.$this->code);
 //var_dump($companyResult);die;
         $this->assign('company', $companyResult['data']);
         $this->assign('title', $title);
