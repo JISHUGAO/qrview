@@ -52,7 +52,7 @@ class IndexController extends BaseController
     {
 
         $searchResult = $this->httpRequest($this->urls['getSearch']."/".$this->code);//获取图片
-
+        //var_dump($searchResult);die;
         $this->assign('content', $searchResult['data']);
         $this->display();
     }

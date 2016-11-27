@@ -26,6 +26,7 @@ class BaseController extends Controller
     {
         if ($method === 'get') {
             $url = (APP_DEBUG == true ? self::GATEWAY_TEST : self::GATEWAY ).$path;
+            //var_dump($url);
             $token = md5($url.json_encode($params));
             if (APP_DEBUG) {
                 $result = Http::get($url, $params);
