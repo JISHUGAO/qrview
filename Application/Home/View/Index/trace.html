@@ -47,8 +47,11 @@
             color: rgb(249, 187, 19);
         }
         iframe{
-            width:100%;
+            width:80%;
             height:100%;
+        }
+        .selected{
+            border-bottom: 1px solid black;
         }
     </style>
 </head>
@@ -76,8 +79,25 @@
 <if condition="$materialBatch neq ''">
     <div class="am-g top-border-orange">
         <span class="title" style="margin-left: 30px;">原材料信息</span>
+
         <volist name="materialBatch" id="item">
             <ul>
+                <li>
+                    <div>
+                    <span class="selected picture">图片</span> | 
+                    <span class="video">视频</span>
+                    </div>
+                    
+                    <div>
+                        <div class="picture-container">
+                            <img src="data:image/png;base64,{$item.picture}"/>
+                        </div>
+                        <div class="am-hide video-container">
+                            {$item.video}
+                        </div>
+                    </div>
+
+                </li>
                 <li>原材料：{$item.materia}</li>
                 <li>供应商：{$item.supplier}</li>
                 <li>原材料编号：{$item.code}</li>
@@ -94,6 +114,22 @@
         <span class="title" style="margin-left: 30px;">商品加工过程</span>
         <volist name="commodityMaking" id="item">
             <ul>
+                <li>
+                    <div>
+                    <span class="selected picture">图片</span> | 
+                    <span class="video">视频</span>
+                    </div>
+                    
+                    <div>
+                        <div class="picture-container">
+                            <img src="data:image/png;base64,{$item.picture}"/>
+                        </div>
+                        <div class="am-hide video-container">
+                            {$item.video}
+                        </div>
+                    </div>
+
+                </li>
                 <li>加工名称：{$item.name}</li>
                 <li>加工编号：{$item.code}</li>
                 <li>加工类型：{$item.type}</li>
@@ -110,6 +146,22 @@
         <span class="title" style="margin-left: 30px;">商品生产过程</span>
         <volist name="commodityProduce" id="item">
             <ul>
+                <li>
+                    <div>
+                    <span class="selected picture">图片</span> | 
+                    <span class="video">视频</span>
+                    </div>
+                    
+                    <div>
+                        <div class="picture-container">
+                            <img src="data:image/png;base64,{$item.picture}"/>
+                        </div>
+                        <div class="am-hide video-container">
+                            {$item.video}
+                        </div>
+                    </div>
+
+                </li>
                 <li>生产加工名称：{$item.name}</li>
                 <li>生产加工编号：{$item.code}</li>
                 <li>生产加工类型：{$item.type}</li>
@@ -126,6 +178,13 @@
         <span class="title" style="margin-left: 30px;">质检报告</span>
         <volist name="commodityCheck" id="item">
             <ul>
+                <li>
+                    
+                        <div class="picture-container">
+                            <img src="data:image/png;base64,{$item.picture}"/>
+                        </div>
+                    
+                </li>
                 <li>名称：{$item.name}</li>
                 <li>类型：{$item.type}</li>
                 <li>编号：{$item.code}</li>
@@ -180,7 +239,7 @@
             }
 
             $.get('{:U("queryMerchant")}', {password:password}, function(response){
-                if (response.status == 'no') {
+                if (response.status == 'yes') {
                     var html = '<li>';
                     html += response.data;
                     html += '</li>';
@@ -190,7 +249,7 @@
                 }
             });
         });
-        var hePlayer = jwplayer('container').setup({
+        /*var hePlayer = jwplayer('container').setup({
             flashplayer: '__PUBLIC__/js/j/jwplayer.flash.swf',
             //html5player: '__PUBLIC__/js/j/provider.html5.js',
             file: '__ROOT__/l.mp4',
@@ -202,7 +261,29 @@
                 { type: "flash", src: "__PUBLIC__/js/j/jwplayer.flash.swf" },
                 { type: "download" }
             ]
-        });
+        });*/
+
+
+        $('.top-border-orange').on('click', '.picture', function(){
+            show($(this), 'picture');
+        })
+        $('.top-border-orange').on('click', '.video', function(){
+            show($(this), 'video');
+        })
+
+        function show(selectedNode, flag)
+        {
+            selectedNode.addClass('selected');
+            selectedNode.siblings().removeClass('selected');
+            var container = selectedNode.parent().next('div');
+            if (flag == 'picture') {
+                container.find('.picture-container').removeClass('am-hide');
+                container.find('.video-container').addClass('am-hide');
+            } else {
+                container.find('.video-container').removeClass('am-hide');
+                container.find('.picture-container').addClass('am-hide');
+            }
+        }
     })
 </script>
 </body>

@@ -20,12 +20,12 @@ class BaseController extends Controller
     }
 
     const GATEWAY = 'http://101.201.220.13:8069/api';
-    //const GATEWAY = 'http://192.168.0.114:8069/api';
+    const GATEWAY_TEST = 'http://192.168.0.114:8069/api';
 
     public function httpRequest($path, $params = array(), $method = 'get')
     {
         if ($method === 'get') {
-            $url = self::GATEWAY.$path;
+            $url = (APP_DEBUG == true ? self::GATEWAY_TEST : self::GATEWAY ).$path;
             $token = md5($url.json_encode($params));
             if (APP_DEBUG) {
                 $result = Http::get($url, $params);

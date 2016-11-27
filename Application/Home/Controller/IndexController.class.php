@@ -114,7 +114,14 @@ class IndexController extends BaseController
         $commodityMakingResult = $this->httpRequest($this->urls['getCommodityMaking'].'/'.$this->code);
         $commodityProduceResult = $this->httpRequest($this->urls['getCommodityProduce'].'/'.$this->code);
         $commodityCheckResult = $this->httpRequest($this->urls['getCommodityCheck'].'/'.$this->code);
-        $video = $this->httpRequest($this->urls['getVideo']);
+        /*$videoMaking = $this->httpRequest($this->urls['getVideo'], [
+            'code' => $this->code,
+            'type' => ''
+            ]);
+        $videoProduce = $this->httpRequest($this->urls['getVideo'], [
+            'code' => $this->code,
+            'type' => ''
+            ]);*/
 
         //var_dump($batchResult['data']);echo '<br/>';
         //var_dump($materialBatchResult);echo '<br/>';
@@ -123,7 +130,8 @@ class IndexController extends BaseController
         //var_dump($commodityCheckResult);echo '<br/>';
         //die;
 //var_dump($video);die;
-        $this->assign('videoHtml', $video['data']);
+        //$this->assign('videoMaking', $videoMaking['data']);
+        //$this->assign('videoProduce', $videoMaking['data']);
         $this->assign('batch', $batchResult['data']);
         $this->assign('materialBatch', $materialBatchResult['data']);
         $this->assign('commodityMaking', $commodityMakingResult['data']);
