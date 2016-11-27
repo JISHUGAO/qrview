@@ -25,7 +25,7 @@ class IndexController extends BaseController
     {
         parent::_initialize();
         if (!session('code')) {
-            session('code', I('get.code', 1001001, 'intval'));
+            session('code', I('get.code', APP_DEBUG ? 1001001 : 20010001, 'intval'));
         }
         $this->code = session('code');
 
