@@ -50,17 +50,14 @@
 </head>
 <body class="am-text-sm">
 <div class="am-g">
-    <div class="am-u-sm-12">
         <img src="data:image/png;base64,{$imgs[0]['image']}" style="width:100%;max-width:100%;height:auto;"/>
-    </div>
-
 </div>
 <div class="am-g top-border-orange">
-    <span class="title" style="margin-left: 30px;">联系我们</span>
+    <span class="title" style="margin-left: 30px;">产品展示</span>
     <volist name="products" id="product">
         <ul>
             <li>
-            <img src="data:image/png;base64,{$product.image}"/>
+            <img src="data:image/png;base64,{$product.image}" style="max-width:80%;"/>
             </li>
             <li>品名:{$product.name}</li>
             <volist name="product['list']" id="item">
@@ -71,9 +68,9 @@
 </div>
 
 <!-- logo begin -->
-<div>
+<!--<div>
     <img class="am-img-responsive" src="__PUBLIC__/img/9bbe0220-0a5b-400e-98f6-e977ba956fc0.png" alt=""/>
-</div>
+</div>-->
 <!-- logo end -->
 
 <include file="Common/bottom"/>

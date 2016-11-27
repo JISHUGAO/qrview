@@ -72,7 +72,7 @@ class IndexController extends BaseController
         if ($productResult['status'] !== 'yes') {
             $this->error();
         }
-//var_dump($productResult['data'][0]);die;
+//var_dump($productResult);die;
         $title = '产品展示';
         $this->assign('products', $productResult['data']);
 
@@ -121,5 +121,14 @@ class IndexController extends BaseController
         $this->assign('commodityProduce', $commodityProduceResult['data']);
         $this->assign('commodityCheck', $commodityCheckResult['data']);
         $this->display();
+    }
+
+
+    /**
+     * 查询经销商
+     */
+    public function queryMerchant()
+    {
+
     }
 }

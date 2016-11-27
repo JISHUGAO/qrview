@@ -29,7 +29,7 @@ class BaseController extends Controller
             $result = S($token);
             if (!$result) {
                 $result = Http::get($url, $params);
-                S($token, $result);
+                S($token, $result, 300);
             }
 
         }
