@@ -242,7 +242,7 @@
             }
 
             $.get('{:U("queryMerchant")}', {password:password}, function(response){
-                if (response.status == 'yes') {
+                if (response.status.toLowerCase() == 'yes') {
                     var html = '<li>';
                     html += response.data;
                     html += '</li>';
