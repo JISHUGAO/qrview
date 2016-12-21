@@ -17,15 +17,17 @@ class IndexController extends BaseController
         'getCommodityCheck' => '/kcgl/get_commodity_check', //商品质检报告
 
         'getAgentList' => '/jcsj/get_agent_list', //追溯经销商
-        'getVideo' => '/batch/get_video/11', //获得视频
+        //'getVideo' => '/batch/get_video/11', //获得视频
         'getCompanyList' => '/jcsj/get_company_list', //获得公司简介
+        'getVideo' => '/jcsj/get_mp4',
+        'getWechat' => '/jcsj/get_wechat/wechat', //获得微信公众号
     );
 
     public function _initialize()
     {
         parent::_initialize();
         if (!session('code')) {
-            session('code', I('get.code', APP_DEBUG ? 1001001 : 20010001, 'intval'));
+            session('code', I('get.code', APP_DEBUG ? 1001001 : 20010001));
         }
         $this->code = session('code');
 
@@ -42,6 +44,9 @@ class IndexController extends BaseController
             $this->error();
         }
 
+        $wechatResult = $this->httpRequest($this->urls['getWechat']);
+//var_dump($wechatResult);die;
+        $this->assign('wechat_url', $wechatResult['data']);
         $this->assign('bottomImg', $bottomImgsResult['data']);
         $this->assign('title', $this->company['name']);
         $this->assign('imgs', $imgsResult['data']);
@@ -53,6 +58,7 @@ class IndexController extends BaseController
 
         $searchResult = $this->httpRequest($this->urls['getSearch']."/".$this->code);//获取图片
         //var_dump($searchResult);die;
+        //echo 123;die;
         $this->assign('content', $searchResult['data']);
         $this->display();
     }
@@ -114,6 +120,8 @@ class IndexController extends BaseController
         $commodityMakingResult = $this->httpRequest($this->urls['getCommodityMaking'].'/'.$this->code);
         $commodityProduceResult = $this->httpRequest($this->urls['getCommodityProduce'].'/'.$this->code);
         $commodityCheckResult = $this->httpRequest($this->urls['getCommodityCheck'].'/'.$this->code);
+
+        //var_dump($commodityMakingResult);die;
         /*$videoMaking = $this->httpRequest($this->urls['getVideo'], [
             'code' => $this->code,
             'type' => ''
@@ -132,10 +140,20 @@ class IndexController extends BaseController
 //var_dump($video);die;
         //$this->assign('videoMaking', $videoMaking['data']);
         //$this->assign('videoProduce', $videoMaking['data']);
+
+        $baseMp4Url = (APP_DEBUG == true ? self::GATEWAY_TEST : self::GATEWAY).$this->urls['getVideo'];
+        $mp4Urls = [
+            'ycl' => $baseMp4Url.'/ycl',
+            'sc' => $baseMp4Url.'/sc',
+            'jg' => $baseMp4Url.'/jg'
+        ];
+        $this->assign('mp4_urls', $mp4Urls);
         $this->assign('batch', $batchResult['data']);
+
         $this->assign('materialBatch', $materialBatchResult['data']);
         $this->assign('commodityMaking', $commodityMakingResult['data']);
         $this->assign('commodityProduce', $commodityProduceResult['data']);
+
         $this->assign('commodityCheck', $commodityCheckResult['data']);
         $this->display();
     }

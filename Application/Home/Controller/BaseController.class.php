@@ -20,7 +20,7 @@ class BaseController extends Controller
     }
 
     const GATEWAY = 'http://101.201.220.13:8069/api';
-    const GATEWAY_TEST = 'http://192.168.0.114:8069/api';
+    const GATEWAY_TEST = 'http://101.201.220.13:8069/api';
 
     public function httpRequest($path, $params = array(), $method = 'get')
     {

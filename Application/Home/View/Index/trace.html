@@ -31,6 +31,9 @@
     <meta name="msapplication-TileImage" content="assets/i/app-icon72x72@2x.png">
     <meta name="msapplication-TileColor" content="#0e90d2">
 
+    <script src="__PUBLIC__/js/j/jwplayer.js"></script>
+    <script type="text/javascript">jwplayer.key="W+FSSIJICMeqqi4MQCwmdLePq9iq8HQqiVT5dQ==";</script>
+
     <link rel="stylesheet" href="__PUBLIC__/css/amazeui.min.css">
     <link rel="stylesheet" href="__PUBLIC__/css/app.css">
     <style>
@@ -54,6 +57,9 @@
             border-bottom: 1px solid black;
         }
         .picture-container img{
+            width:80%;
+        }
+        .video-container {
             width:80%;
         }
     </style>
@@ -95,8 +101,24 @@
                         <div class="picture-container">
                             <img src="data:image/png;base64,{$item.picture}"/>
                         </div>
-                        <div class="am-hide video-container">
-                            {$item.video}
+                        <div class="am-hide video-container" >
+                            <div id="ycl{$item.code}"></div>
+                            <script>
+                                var hePlayer = jwplayer('ycl{$item.code}').setup({
+                                    flashplayer: '__PUBLIC__/js/j/jwplayer.flash.swf',
+                                    //html5player: '__PUBLIC__/js/j/provider.html5.js',
+                                    file: '{$mp4_urls.ycl}?code={$item.code}',
+                                    width: '80%',
+                                    //height:'100%',
+                                    type:'mp4',
+                                    dock: false,
+                                    modes :[
+                                        { type: "html5" },
+                                        { type: "flash", src: "__PUBLIC__/js/j/jwplayer.flash.swf" },
+                                        { type: "download" }
+                                    ]
+                                })
+                            </script>
                         </div>
                     </div>
 
@@ -127,8 +149,24 @@
                         <div class="picture-container">
                             <img src="data:image/png;base64,{$item.picture}"/>
                         </div>
-                        <div class="am-hide video-container">
-                            {$item.video}
+                        <div class="am-hide video-container" >
+                            <div id="jg{$item.code}"></div>
+                            <script>
+                                var hePlayer = jwplayer('jg{$item.code}').setup({
+                                    flashplayer: '__PUBLIC__/js/j/jwplayer.flash.swf',
+                                    //html5player: '__PUBLIC__/js/j/provider.html5.js',
+                                    file: '{$mp4_urls.jg}?code={$item.code}',
+                                    width: '80%',
+                                    //height:'100%',
+                                    type:'mp4',
+                                    dock: false,
+                                    modes :[
+                                        { type: "html5" },
+                                        { type: "flash", src: "__PUBLIC__/js/j/jwplayer.flash.swf" },
+                                        { type: "download" }
+                                    ]
+                                })
+                            </script>
                         </div>
                     </div>
 
@@ -160,7 +198,23 @@
                             <img src="data:image/png;base64,{$item.picture}"/>
                         </div>
                         <div class="am-hide video-container">
-                            {$item.video}
+                            <div id="sc{$item.code}"></div>
+                            <script>
+                                var hePlayer = jwplayer('sc{$item.code}').setup({
+                                    flashplayer: '__PUBLIC__/js/j/jwplayer.flash.swf',
+                                    //html5player: '__PUBLIC__/js/j/provider.html5.js',
+                                    file: '{$mp4_urls.sc}?code={$item.code}',
+                                    width: '80%',
+                                    //height:'100%',
+                                    dock: false,
+                                    type:'mp4',
+                                    modes :[
+                                        { type: "html5" },
+                                        { type: "flash", src: "__PUBLIC__/js/j/jwplayer.flash.swf" },
+                                        { type: "download" }
+                                    ]
+                                })
+                            </script>
                         </div>
                     </div>
 
@@ -230,8 +284,7 @@
 <script src="assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 <script src="__PUBLIC__/js/amazeui.min.js"></script>
-<script src="__PUBLIC__/js/j/jwplayer.js"></script>
-<script type="text/javascript">jwplayer.key="W+FSSIJICMeqqi4MQCwmdLePq9iq8HQqiVT5dQ==";</script>
+
 <script>
     $(function(){
         $('#query').on('click', function(){

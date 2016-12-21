@@ -16,9 +16,10 @@ class Http
         //print_r($url);
         //echo "<br/>";
         $curl = curl_init($url);
+        //curl_setopt($curl, CURLOPT_TIMEOUT, 10);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true) ;
         $output = curl_exec($curl);
-
+        //var_dump($output);die;
         curl_close($curl);
         return $output;
     }
