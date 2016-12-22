@@ -40,9 +40,9 @@ class IndexController extends BaseController
 
         $imgsResult = $this->httpRequest($this->urls['getPicture'].'/head');//获取图片
         $bottomImgsResult = $this->httpRequest($this->urls['getPicture'].'/body');//获取图片
-        if ($imgsResult['status'] !== 'yes') {
+        /*if ($imgsResult['status'] !== 'yes') {
             $this->error();
-        }
+        }*/
 
         $wechatResult = $this->httpRequest($this->urls['getWechat']);
 //var_dump($wechatResult);die;
@@ -82,9 +82,9 @@ class IndexController extends BaseController
     public function show_product()
     {
         $productResult = $this->httpRequest($this->urls['getCommodityList']);//获得商品详情
-        if ($productResult['status'] !== 'yes') {
+        /*if ($productResult['status'] !== 'yes') {
             $this->error();
-        }
+        }*/
 //var_dump($productResult);die;
         $title = '产品展示';
         $this->assign('products', $productResult['data']);
