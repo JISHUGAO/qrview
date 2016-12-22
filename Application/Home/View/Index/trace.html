@@ -238,7 +238,9 @@
                 <li>
                     
                         <div class="picture-container">
-                            <img src="data:image/png;base64,{$item.picture}"/>
+                            <volist name="item['picture']" id="v">
+                            <img src="data:image/png;base64,{$v.picture}"/>
+                            </volist>
                         </div>
                     
                 </li>
