@@ -298,9 +298,10 @@
 
             $.get('{:U("queryMerchant")}', {password:password}, function(response){
                 if (response.status.toLowerCase() == 'yes') {
-                    var html = '<li>';
-                    html += response.data;
-                    html += '</li>';
+                    var html = '<li>经销商名称：'+response.data.name+'</li>';
+                    html += '<li>联系人:'+response.data.contacts_name+'</li>';
+                    html += '<li>电话:'+response.data.tel+'</li>';
+                    html += '<li>地址:'+response.data.address+'</li>';
                     $('#agent_content').html(html);
                 } else {
                     alert('密码错误');
