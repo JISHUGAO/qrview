@@ -7,15 +7,14 @@
 
 .title{
     margin-right: 10px;
-    border-bottom-color: rgb(249, 187, 19);
-    border-bottom-width: 2px;
-    border-bottom-style: solid;
     width: 100%;
     height: 40px;
     color: rgb(6, 57, 101);
     font-size: 20px;
+    border-bottom-color: rgb(249, 187, 19);
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
 }
-
 ul{
     list-style: none;
 }

@@ -36,6 +36,7 @@
 
     <link rel="stylesheet" href="__PUBLIC__/css/amazeui.min.css">
     <link rel="stylesheet" href="__PUBLIC__/css/app.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/font-awesome.min.css"/>
     <style>
         .top-border-orange ul li a{
             background:rgb(7, 57, 101);
@@ -62,6 +63,16 @@
         .video-container {
             width:80%;
         }
+        .am-g .display-none {
+            display:none;
+        }
+        .title2 {
+            margin-right: 10px;
+            width: 100%;
+            height: 40px;
+            color: rgb(6, 57, 101);
+            font-size: 20px;
+        }
     </style>
 </head>
 <body class="am-text-sm">
@@ -73,7 +84,7 @@
 
 <if condition="$batch neq ''">
     <div class="am-g top-border-orange">
-        <span class="title" style="margin-left: 30px;">批次信息</span>
+        <span class="title" style="margin-left: 30px;">商品信息</span>
             <ul>
                 <li>
                     批次编号：{$batch.code}
@@ -87,10 +98,10 @@
 
 <if condition="$materialBatch neq ''">
     <div class="am-g top-border-orange">
-        <span class="title" style="margin-left: 30px;">原材料信息</span>
+        <span class="title2 menus" data-index="1" style="margin-left: 30px;">生产原料信息 <i class="fa fa-angle-up"></i></span>
 
         <volist name="materialBatch" id="item">
-            <ul>
+            <ul class="display-none">
                 <li>
                     <div>
                     <span class="selected picture">图片</span> | 
@@ -98,7 +109,7 @@
                     </div>
                     
                     <div>
-                        <div class="picture-container">
+                        <div class="am-hide picture-container">
                             <img src="data:image/png;base64,{$item.picture}"/>
                         </div>
                         <div class="am-hide video-container" >
@@ -136,9 +147,9 @@
 
 <if condition="$commodityMaking neq ''">
     <div class="am-g top-border-orange">
-        <span class="title" style="margin-left: 30px;">商品加工过程</span>
+        <span class="title2 menus" data-index="2" style="margin-left: 30px;">加工工艺信息 <i class="fa fa-angle-up"></i></span>
         <volist name="commodityMaking" id="item">
-            <ul>
+            <ul class="display-none">
                 <li>
                     <div>
                     <span class="selected picture">图片</span> | 
@@ -146,7 +157,7 @@
                     </div>
                     
                     <div>
-                        <div class="picture-container">
+                        <div class="am-hide picture-container">
                             <img src="data:image/png;base64,{$item.picture}"/>
                         </div>
                         <div class="am-hide video-container" >
@@ -184,9 +195,9 @@
 
 <if condition="$commodityProduce neq ''">
     <div class="am-g top-border-orange">
-        <span class="title" style="margin-left: 30px;">商品生产过程</span>
+        <span class="title2 menus" data-index="3" style="margin-left: 30px;">生产工艺信息 <i class="fa fa-angle-up"></i></span>
         <volist name="commodityProduce" id="item">
-            <ul>
+            <ul class="display-none">
                 <li>
                     <div>
                     <span class="selected picture">图片</span> | 
@@ -194,7 +205,7 @@
                     </div>
                     
                     <div>
-                        <div class="picture-container">
+                        <div class="am-hide picture-container">
                             <img src="data:image/png;base64,{$item.picture}"/>
                         </div>
                         <div class="am-hide video-container">
@@ -232,9 +243,9 @@
 
 <if condition="$commodityCheck neq ''">
     <div class="am-g top-border-orange">
-        <span class="title" style="margin-left: 30px;">质检报告</span>
+        <span class="title2 menus" data-index="4" style="margin-left: 30px;">检验报告信息 <i class="fa fa-angle-up"></i></span>
         <volist name="commodityCheck" id="item">
-            <ul>
+            <ul class="display-none">
                 <li>
                     
                         <div class="picture-container">
@@ -257,7 +268,7 @@
 </if>
 
 <div class="am-g top-border-orange">
-    <span class="title" style="margin-left: 30px;">经销商查询</span>
+    <span class="title" style="margin-left: 30px;">物流信息验证</span>
     <ul>
         <li>
             <input type="text" name="password" id="password" value=""/>
@@ -321,7 +332,30 @@
                 { type: "download" }
             ]
         });*/
+        $('.menus').on('click', function() {
+            var self = $(this)
+            $('.menus').each(function (index, el) {
+                if ($(el).attr('data-index') !== self.attr('data-index')) {
+                    $(el).nextAll('.display-none').hide('slow');
+                    $(el).addClass('title2').removeClass('title');
+                    $(el).find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+                }
+            })
 
+            if ($(this).nextAll('.display-none').is(':hidden')) {
+                $(this).nextAll('.display-none').show('slow');
+                $(this).addClass('title').removeClass('title2');
+                $(this).find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
+            } else {
+                $(this).nextAll('.display-none').hide('slow');
+                $(this).addClass('title2').removeClass('title');
+                $(this).find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
+            }
+
+
+            //
+
+        })
 
         $('.top-border-orange').on('click', '.picture', function(){
             show($(this), 'picture');

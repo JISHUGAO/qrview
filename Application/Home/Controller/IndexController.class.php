@@ -3,6 +3,7 @@ namespace Home\Controller;
 
 class IndexController extends BaseController
 {
+    protected $company;
 
     private $urls = array(
         'getCompany' => '/jcsj/get_company/head',            //获取公司信息
@@ -29,17 +30,23 @@ class IndexController extends BaseController
         if (!session('code')) {
             session('code', I('get.code', APP_DEBUG ? 1001001 : 20010001));
         }
+//        3227320100031519
+//        4463609080121162
+//        6708040736192232
         $this->code = session('code');
 
         $this->company = session('company');
         if (!$this->company) {
             $companyResult = $this->httpRequest($this->urls['getCompany']);//获取公司信息
-            session('company', $companyResult['data'][0]);
             $this->company = $companyResult['data'][0];
+            $this->company['web2'] = (substr($this->company['web'], 0, 4) == 'http') ?
+                $this->company['web'] :
+                'http://'.$this->company['web'];
+            session('company', $this->company);
         }
 
         $imgsResult = $this->httpRequest($this->urls['getPicture'].'/head');//获取图片
-        $bottomImgsResult = $this->httpRequest($this->urls['getPicture'].'/body');//获取图片
+        //$bottomImgsResult = $this->httpRequest($this->urls['getPicture'].'/body');//获取图片
         /*if ($imgsResult['status'] !== 'yes') {
             $this->error();
         }*/
@@ -47,7 +54,7 @@ class IndexController extends BaseController
         $wechatResult = $this->httpRequest($this->urls['getWechat']);
 //var_dump($wechatResult);die;
         $this->assign('wechat_url', $wechatResult['data']);
-        $this->assign('bottomImg', $bottomImgsResult['data']);
+        //$this->assign('bottomImg', $bottomImgsResult['data']);
         $this->assign('title', $this->company['name']);
         $this->assign('imgs', $imgsResult['data']);
         $this->assign('company', $this->company);
@@ -85,7 +92,7 @@ class IndexController extends BaseController
         /*if ($productResult['status'] !== 'yes') {
             $this->error();
         }*/
-//var_dump($productResult);die;
+        //var_dump($productResult);die;
         $title = '产品展示';
         $this->assign('products', $productResult['data']);
 
@@ -98,7 +105,6 @@ class IndexController extends BaseController
      */
     public function about_us()
     {
-
         $title = '联系我们';
         $this->assign('info', $this->company);
         $this->assign('title', $title);

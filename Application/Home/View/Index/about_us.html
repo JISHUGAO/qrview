@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="__PUBLIC__/css/amazeui.min.css">
     <link rel="stylesheet" href="__PUBLIC__/css/app.css">
     <style>
-        .top-border-orange ul li a{
+       /* .top-border-orange ul li a{
             background:rgb(7, 57, 101);
             height:100px;
             margin:10px auto;
@@ -45,7 +45,7 @@
             border: 2px solid rgb(249, 187, 19);
             padding-top:70px;
             color: rgb(249, 187, 19);
-        }
+        }*/
     </style>
 </head>
 <body class="am-text-sm">
@@ -58,10 +58,12 @@
 <div class="am-g top-border-orange">
     <span class="title" style="margin-left: 30px;">联系我们</span>
     <ul style="list-style: none;" >
+        <li>联系人：{$info.name}</li>
         <li>电话：{$info.phone}</li>
-        <li>传真：{$info.fax}</li>
-        <li>邮箱：{$info.email}</li>
-        <li>地址：{$info.province}{$info.city}{$info.street}</li>
+        <li>微信：{$info.wetch}</li>
+        <li>qq：{$info.qq}</li>
+        <li>官网：<a href="{$info.web2}" target="_blank">{$info.web}</a></li>
+        <li>地址：{$info.address}</li>
     </ul>
 </div>
 <!-- logo begin -->
