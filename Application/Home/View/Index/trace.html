@@ -66,12 +66,20 @@
         .am-g .display-none {
             display:none;
         }
-        .title2 {
-            margin-right: 10px;
+        .title{
+            padding-left:30px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            margin-bottom: 1px;
             width: 100%;
-            height: 40px;
-            color: rgb(6, 57, 101);
-            font-size: 20px;
+            height: auto;
+            color: white;
+            font-size: 15px;
+            display:inline-block;
+            background:#DA251C;
+        }
+        .title i {
+            margin-left:60%;
         }
     </style>
 </head>
@@ -83,8 +91,8 @@
 
 
 <if condition="$batch neq ''">
-    <div class="am-g top-border-orange">
-        <span class="title" style="margin-left: 30px;">商品信息</span>
+    <div class="am-g">
+        <span class="title">商品信息</span>
             <ul>
                 <li>
                     批次编号：{$batch.code}
@@ -97,8 +105,8 @@
 </if>
 
 <if condition="$materialBatch neq ''">
-    <div class="am-g top-border-orange">
-        <span class="title2 menus" data-index="1" style="margin-left: 30px;">生产原料信息 <i class="fa fa-angle-up"></i></span>
+    <div class="am-g">
+        <span class="title menus" data-index="1">生产原料信息 <i class="fa fa-angle-up" style="text-align:right;"></i></span>
 
         <volist name="materialBatch" id="item">
             <ul class="display-none">
@@ -146,8 +154,8 @@
 </if>
 
 <if condition="$commodityMaking neq ''">
-    <div class="am-g top-border-orange">
-        <span class="title2 menus" data-index="2" style="margin-left: 30px;">加工工艺信息 <i class="fa fa-angle-up"></i></span>
+    <div class="am-g">
+        <span class="title menus" data-index="2">加工工艺信息 <i class="fa fa-angle-up"></i></span>
         <volist name="commodityMaking" id="item">
             <ul class="display-none">
                 <li>
@@ -194,8 +202,8 @@
 </if>
 
 <if condition="$commodityProduce neq ''">
-    <div class="am-g top-border-orange">
-        <span class="title2 menus" data-index="3" style="margin-left: 30px;">生产工艺信息 <i class="fa fa-angle-up"></i></span>
+    <div class="am-g">
+        <span class="title menus" data-index="3">生产工艺信息 <i class="fa fa-angle-up"></i></span>
         <volist name="commodityProduce" id="item">
             <ul class="display-none">
                 <li>
@@ -242,8 +250,8 @@
 </if>
 
 <if condition="$commodityCheck neq ''">
-    <div class="am-g top-border-orange">
-        <span class="title2 menus" data-index="4" style="margin-left: 30px;">检验报告信息 <i class="fa fa-angle-up"></i></span>
+    <div class="am-g">
+        <span class="title menus" data-index="4">检验报告信息 <i class="fa fa-angle-up"></i></span>
         <volist name="commodityCheck" id="item">
             <ul class="display-none">
                 <li>
@@ -267,11 +275,11 @@
     </div>
 </if>
 
-<div class="am-g top-border-orange">
-    <span class="title" style="margin-left: 30px;">物流信息验证</span>
+<div class="am-g">
+    <span class="title">物流信息验证</span>
     <ul>
         <li>
-            <input type="text" name="password" id="password" value=""/>
+            <input type="text" name="password" id="password" value="" placeholder="输入验证码"/>
             <button id="query">确定</button>
         </li>
 
@@ -337,18 +345,15 @@
             $('.menus').each(function (index, el) {
                 if ($(el).attr('data-index') !== self.attr('data-index')) {
                     $(el).nextAll('.display-none').hide('slow');
-                    $(el).addClass('title2').removeClass('title');
                     $(el).find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
                 }
             })
 
             if ($(this).nextAll('.display-none').is(':hidden')) {
                 $(this).nextAll('.display-none').show('slow');
-                $(this).addClass('title').removeClass('title2');
                 $(this).find('i').removeClass('fa-angle-up').addClass('fa-angle-down');
             } else {
                 $(this).nextAll('.display-none').hide('slow');
-                $(this).addClass('title2').removeClass('title');
                 $(this).find('i').removeClass('fa-angle-down').addClass('fa-angle-up');
             }
 
@@ -357,10 +362,10 @@
 
         })
 
-        $('.top-border-orange').on('click', '.picture', function(){
+        $('.am-g').on('click', '.picture', function(){
             show($(this), 'picture');
         })
-        $('.top-border-orange').on('click', '.video', function(){
+        $('.am-g').on('click', '.video', function(){
             show($(this), 'video');
         })
 
