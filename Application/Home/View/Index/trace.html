@@ -317,10 +317,20 @@
 
             $.get('{:U("queryMerchant")}', {password:password}, function(response){
                 if (response.status.toLowerCase() == 'yes') {
-                    var html = '<li>经销商名称：'+response.data.name+'</li>';
+                    /*var html = '<li>经销商名称：'+response.data.name+'</li>';
                     html += '<li>联系人:'+response.data.contacts_name+'</li>';
                     html += '<li>电话:'+response.data.tel+'</li>';
-                    html += '<li>地址:'+response.data.address+'</li>';
+                    html += '<li>地址:'+response.data.address+'</li>';*/
+                    var data = response.data;
+                    var html = '';
+                    html += '<li>入库单号：'+data.rk_code+'</li>';
+                    html += '<li>入库时间：'+data.rk_date+'</li>';
+                    html += '<li>出库单号：'+data.ck_code+'</li>';
+                    html += '<li>出库时间：'+data.ck_date+'</li>';
+                    html += '<li>销售区域：'+data.area+'</li>';
+                    html += '<li>经销客户：'+data.agent+'</li>';
+                    html += '<li>配送单号：'+data.express_code+'</li>';
+                    html += '<li>配送方式：'+data.express+'</li>';
                     $('#agent_content').html(html);
                 } else {
                     alert('密码错误');

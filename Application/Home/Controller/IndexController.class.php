@@ -34,7 +34,7 @@ class IndexController extends BaseController
 //        4463609080121162
 //        6708040736192232
         $this->code = session('code');
-
+        //echo 123;die;
         $this->company = session('company');
         if (!$this->company) {
             $companyResult = $this->httpRequest($this->urls['getCompany']);//获取公司信息
@@ -44,7 +44,7 @@ class IndexController extends BaseController
                 'http://'.$this->company['web'];
             session('company', $this->company);
         }
-
+        //echo 123;die;
         $imgsResult = $this->httpRequest($this->urls['getPicture'].'/head');//获取图片
         //$bottomImgsResult = $this->httpRequest($this->urls['getPicture'].'/body');//获取图片
         /*if ($imgsResult['status'] !== 'yes') {
